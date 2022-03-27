@@ -73,4 +73,62 @@ public class StudentDAO {
 			}
 			return list;
 		}
+		public Student getStudentByRollno(int rollno) {
+			Student student=null;
+			try {
+				Connection con=getConnection();
+				PreparedStatement ps=con.prepareStatement("Select * from studentdetails where rollno=?");
+				ps.setInt(1, rollno);
+				ResultSet rs=ps.executeQuery();
+				if(rs.next())
+					student=new Student(rs.getInt(1),rs.getString(2),rs.getDate(3));
+				
+				con.close();
+				
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			
+		return student;
+		}
+		public int UpdateData(Student student) {
+			int result=0;
+			try {
+			Connection con=getConnection();
+			
+			java.sql.Date sdob=new java.sql.Date(student.getDOB().getTime());
+			System.out.println(student.getDOB());
+			//To insert records 
+			PreparedStatement ps=con.prepareStatement("update studentDetails set studname=?,dob=? where rollno=?");
+			ps.setInt(3,student.getRollno());
+			ps.setString(1,student.getStudname());
+			ps.setDate(2, sdob);
+			result=ps.executeUpdate();
+			con.close();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+		public int getStudentIdDelete(int rollno) {
+			int result=0;
+			try {
+			Connection con=getConnection();
+			
+			
+			//To insert records 
+			PreparedStatement ps=con.prepareStatement("delete from studentdetails where rollno=?");
+			
+			ps.setInt(1,rollno);
+			
+			result=ps.executeUpdate();
+			con.close();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
 }

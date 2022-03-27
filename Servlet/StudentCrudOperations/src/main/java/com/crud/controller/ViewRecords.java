@@ -28,8 +28,11 @@ public class ViewRecords extends HttpServlet {
 			ArrayList<Student> list=new StudentDAO().getRecords();
 			PrintWriter out=response.getWriter();
 			out.println("<table border=2>");
-			for(Student student:list)
-				out.println("<tr><td>"+student.getRollno()+"</td><td> "+student.getStudname()+"</td><td> "+student.getDOB()+"</td></tr> ");
+			for(Student student:list) {
+				out.println("<tr><td>"+student.getRollno()+"</td><td> "+student.getStudname()+"</td><td> "+student.getDOB()+"</td> ");
+			out.println("<td><a href='EditServlet?rollno="+student.getRollno()+"'>edit</a></td>");
+			out.println("<td><a href='DeleteServlet?rollno="+student.getRollno()+"'>delete</a></td></tr>");
+}
 			
 			out.println("</table>");
 			
