@@ -1,12 +1,16 @@
 package com.crud.service;
 
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.sql.Statement;
+import java.sql.Types;
+
 import com.crud.model.Student;
 
 
@@ -131,4 +135,76 @@ public class StudentDAO {
 			}
 			return result;
 		}
+		
+		/*public String getStudentDOB(int rollno) {
+			Date date=null;
+			String name=null;
+/*
+ * delimiter $$
+create procedure getstudentDOB2(in p_rollno integer, out p_dob date,out p_name varchar(20))
+begin
+	select dob,studname into p_dob,p_name from studentdetails where rollno=p_rollno;
+end$$
+
+delimiter ;
+
+call getstudentDOB2(3, @p_dob,@p_name);
+select @p_dob,@p_name;			
+ 
+			try {
+			//2) Create Con Connection
+			Connection con=getConnection();
+			//3)  Call Procedure
+			CallableStatement stmt=con.prepareCall("{call getstudentDOB2(?,?,?)}"); //call getstudentDOB2(101, @dob,@name);
+		    stmt.setInt(1,rollno);
+		    stmt.registerOutParameter(2, Types.DATE);
+		    stmt.registerOutParameter(3, Types.VARCHAR);
+		    stmt.execute();
+		    
+		     date=stmt.getDate(2);
+		     name=stmt.getString(3);
+		     con.close();
+			}
+			catch(Exception e) {
+					e.printStackTrace();
+			}
+		
+		return date+" "+name;
+		}*/
+		
+		public ArrayList<Student> getStudentDOB() {
+			ResultSet rs=null;
+			ArrayList<Student> list=new ArrayList<>();
+			try {
+			//2) Create Con Connection
+			Connection con=getConnection();
+			//3)  Call Procedure
+/*delimiter $$
+create procedure getstudentDOB3()
+begin
+	select * from studentdetails;
+end$$
+
+delimiter ;
+
+call getstudentDOB3();*/
+
+			
+			CallableStatement stmt=con.prepareCall("{call getstudentDOB3()}"); //call getstudentDOB(101, @dob);
+		   
+		     rs=stmt.executeQuery();
+		     while(rs.next()) {
+					
+					list.add(new Student(rs.getInt(1),rs.getString(2),rs.getDate(3)));
+		     }
+		     con.close();
+			}
+			catch(Exception e) {
+					e.printStackTrace();
+			}
+		
+		return list;
+		}
+		
+		
 }
