@@ -1,0 +1,96 @@
+Login Page(Starting from here)
+- When somebody logins he will be sent to "Search Page"
+
+Search Page:(2nd page after login)
+- date of travel
+- source city
+- destination city
+- the number of persons.
+
+Flight Details Page:(3rd Page after Search Page)
+Based on the travel details entered entered on "Search Page" above, it will show the available flights with their ticket prices.
+
+
+Register Page / Personal Details Page: (4th Page after Flight Details Page)
+Once a person selects a flight to book, they will be taken to a register page where they must fill in their personal details. 
+
+Review Page: ( this will come after Register Page)
+In this they are shown the flight details of the flight that they have booked and the payment is done via a dummy payment gateway. once user clicks on the" payment button" he will be shown a dummy payment page.
+
+
+Dummy Page (will come after Review Page):
+This will have the qr code pic with price and one single "Done" button
+
+
+Confirmation Page:(this will come after Dummy Page):
+show messge here" Thnak you for booking !!!" and show with the details of the booking.   
+-----------------------------------------------------------------------------------------------------------------
+
+
+Tables:
+1. Login Table --> Admin_Login and User_Login
+   - Username (enter email only)  ---> PK
+   - Password
+
+2. Flight details table  ---> all the flight specific details like ; 
+ - airline name
+ - price
+ - flight no (PRIMARY KEY)
+ - source city
+ - destination city
+ - departure time from source
+ - arrival time to destination
+ - total_seats
+ - booked_seats
+ - seat_availibility (  total_seats - booked_seats )
+ - date of travel
+ - class (Economy / Business)
+
+3. Register Details table  -> whatever the user will enter on the register page thos details
+ - Full Name
+ - Address
+ - Age
+ - mobile
+ - email id / UserName  ---> PK 
+ - Drop down - Addhar card/ SSN / Passport / Voter ID / Driving license  +  TextField (Enter No)
+ - country
+
+4. booking table: (history of person travelling) -- all tables are realted to each other
+ - email id  ---> FK
+ - booking id ---> PK
+ - flight no---> FK
+
+
+ADMIN:
+Login Screen ---> sessionhandling.jsp
+
+(ADMIN) Chnage of password ---> 
+1. create the jsp page and write three text fields with old pass, new pass and confirm pass
+2. When somebody clicks on change password button you have to call the new jsp "changepass.jsp"
+3. inside the changepass.jsp write the code of <sql:... tags to make change in password in table" 
+(use the file sqltags.jsp)
+
+Search Page ----> create a form with four text fields --->saerchflights.jsp
+- date of travel
+- source city
+- destination city
+- the number of persons
+when somebody click on "search" button ----> it will go to flightpage.jsp
+
+Flight Page :
+sqltags.jsp -----> to retrieve the data from the database and show them in form of table
+when somebody clicks on the href link which is flight number it will move to next page of register---->registerdetails.jsp
+
+Register page:
+here also create a form where user will fill the details and when it click on "review button"----> move to reviewdetails.jsp
+here you ahve to set the paramters forms which you have filled and this will be sent to reviewdetails.jsp
+(use the file - productindex.jsp)
+
+Review Page:
+here fetch all the data from the reviewdetails.jsp and once we click on the "Payment" button----> confirmation.jsp
+(use the file - showbean.jsp)
+
+Confirmation Page:
+fetch the username from the review page and display here as "Thank you <username> for booking with us !!"
+
+
