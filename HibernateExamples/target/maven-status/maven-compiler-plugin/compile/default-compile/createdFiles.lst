@@ -1,0 +1,4 @@
+com\technicalkeeda\dao\MovieDao.class
+com\technicalkeeda\test\App.class
+com\technicalkeeda\entities\Movie.class
+com\technicalkeeda\dao\impl\MovieDaoImpl.class
